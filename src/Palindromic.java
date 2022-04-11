@@ -1,36 +1,46 @@
 //  find the longest palindromic substring in a given string? Example string: csbcjfbvbvfjcb
 
-
-public class Palindromic {
-
-public static void main(String[] Args) {
-
-    String name = "csbcjfbvbvfjcb";
-    String temp="",rev="";
-
-    System.out.println(name.length());
-    System.out.println(name);
-     for(int i=name.length()-1; i >= 0; i--){
-         rev += name.charAt(i);
-     }
-    System.out.println("reverse = " +rev);
-
-
-    for(int j = 0; j<=name.length()-1;){
-        for(int k=0; k <=name.length()-1;){
-            if (name.charAt(j) == rev.charAt(k)) {
-                temp += name.charAt(j);
-                j++;
-                k++;
-            } else {
-                j++;
-                k++;
-            }
-
-        }
-     }
-    System.out.println(temp);
-
+class Palindromic
+{
+    public static void main(String[] args)
+    {
+        String str = "csbcjfbvvbfjcb";
+        System.out.println("The longest palindromic substring of " + str + " is "
+                + findLongestPalindromicSubstring(str));
     }
 
+    public static String expand(String str, int low, int high)
+    {
+        while (low >= 0 && high < str.length() && (str.charAt(low) == str.charAt(high))) {
+            low--;
+            high++;
+        }
+        return str.substring(low + 1, high);
+    }
+
+    public static String findLongestPalindromicSubstring(String str)
+    {
+        String max_str = "", curr_str;
+        int max_length = 0, curr_length;
+
+        for (int i = 0; i < str.length(); i++)
+        {
+                // Find the even length palindrome.
+                curr_str = expand(str, i, i + 1);
+                curr_length = curr_str.length();
+                if (curr_length > max_length) {
+                    max_length = curr_length;
+                    max_str = curr_str;
+                }
+
+                // find the odd length palindrome.
+                curr_str = expand(str, i, i);
+                curr_length = curr_str.length();
+                if (curr_length > max_length) {
+                    max_length = curr_length;
+                    max_str = curr_str;
+                }
+        }
+        return max_str;
+    }
 }
