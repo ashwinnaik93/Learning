@@ -9,6 +9,7 @@ class Palindromic
                 + findLongestPalindromicSubstring(str));
     }
 
+
     public static String expand(String str, int low, int high)
     {
         while (low >= 0 && high < str.length() && (str.charAt(low) == str.charAt(high))) {
